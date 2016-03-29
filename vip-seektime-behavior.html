@@ -1,0 +1,45 @@
+<!--
+Copyright (c) 2016 The Ayla Project Authors.
+This code may only be used under the MIT style license found at http://aylaweb.github.io/LICENSE.txt
+The complete set of authors may be found at http://aylaweb.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://aylaweb.github.io/CONTRIBUTORS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<script>
+    Ayla = window.Ayla || {};
+    Ayla.VipSeekTimeBehavior = {
+        properties: {
+            seekTimeSource: {
+                type: String,
+                notify: true
+                
+            }
+        },
+        created: function () {
+            console.log(this.id + " -> vip-seek-time -> Event created");
+        },
+        attached: function () {
+            console.log(this.id + " -> vip-seek-time -> Event attached");
+        },
+        ready: function () {
+            console.log(this.id + " -> vip-seek-time -> Event ready");
+            this.async(this._innerRuleSeekTime.bind(this));
+        },
+        _innerRuleSeekTime: function () {
+            var ruleSeekTimeSource = {};
+            ruleSeekTimeSource.when = "seekTimeSource$.currentTimeNotify";
+            ruleSeekTimeSource.then = "{this.setCurrentTime(seekTimeSource$.currentTime)}";
+            this.rules = this.rules || [];
+            this.push('rules', ruleSeekTimeSource);
+        } 
+   /*     _seekTimeSourceChanged: function (val) {
+            var ruleSeekTimeSource = {};
+            ruleSeekTimeSource.when = val + ".currentTimeNotify";
+            ruleSeekTimeSource.then = "{this.setCurrentTime(" + val + ".currentTime)}";
+            this.rules = this.rules || [];
+            this.push('rules', ruleSeekTimeSource);
+        } */
+    };
+</script>
